@@ -4,6 +4,11 @@ const express = require('express')
 const app = express()
 const bancoDeDados = require('./bancoDeDados')
 
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
 app.get('/produtos', (req, res, next) => {
     res.send(bancoDeDados.getProdutos()) // converter para JSON
 })
@@ -14,8 +19,9 @@ app.get('/produtos/:id', (req, res, next) => {
 
 app.post('/produtos', (req, res, next) => {
     const produto = bancoDeDados.salvarProduto({
-        nome: req.body.name,
+        nome: req.body.nome,
         preco: req.body.preco
+
     })
     res.send(produto)
 })
